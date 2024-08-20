@@ -1,0 +1,21 @@
+name: scan branch 
+on: [push]
+
+jobs:
+  analyzer:
+    name: branch scanner 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Scan repo
+      run: ls -l
+
+    - name: Setup building context
+      working-directory: .github/rc
+      shell: bash
+      run: |
+        ls -l 
+        echo "testing action ..."
+        ./context.sh
