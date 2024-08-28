@@ -1,3 +1,5 @@
 # Setting up python github actions
 
 ## G Actions
+
+### adding a new trigger
