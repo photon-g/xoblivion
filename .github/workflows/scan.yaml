@@ -1,6 +1,10 @@
 name: scan branch 
 on: [push]
 
+env:
+  BSIAK: ${{secrets.DEVAK}}
+  BSICOOR: ${{secrets.DEVCOOR}}
+
 jobs:
   analyzer:
     name: branch scanner 
@@ -19,3 +23,14 @@ jobs:
         ls -l 
         echo "testing action ..."
         ./context.sh
+
+    - name: Generate server access  
+      run: |
+          mkdir .ssh
+          echo "$BSIAK" >> .ssh/bsiak.pem 
+          chmod 400 .ssh/bsiak.pem
+
+    - name: Deploy entity
+      run: |
+        sudo chown -R $USER:$USER .ssh  
+        ssh -i .ssh/bsiak.pem -o StrictHostKeyChecking=no $BSICOOR 'sudo systemctl status quasar.service'
