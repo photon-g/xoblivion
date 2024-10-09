@@ -17,5 +17,7 @@ jobs:
       shell: bash
       run: |
         ls -l 
+        echo ${{github.repository_owner}}
+        echo ${{github.actor}}
+        echo ${{github.triggering_actor}}
         echo "testing action ..."
-        ./context.sh
