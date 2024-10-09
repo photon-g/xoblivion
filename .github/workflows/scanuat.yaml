@@ -1,7 +1,7 @@
 name: scan uat branch 
 on: 
   pull_request:
-    types: [review_requested]
+    types: [opened,reopened,review_requested]
 
 jobs:
   analyzer:
@@ -12,7 +12,18 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Scan repo
-      run: ls -l
+      if: {{github.repository_owner == github.actor && github.event.pull_request.opened == true }} 
+      run: |
+        echo $${ github.event.pull_request.opened }}
+        echo $${ github.event.pull_request.reopened }}
+        echo $${ github.event.pull_request.reopened }}
+        ls -l
+
+    - name: Scan status
+      if: {{github.event.pull_request.review_requested == true }}
+      run: 
+        echo "detected the right status" 
+
 
     - name: Setup building context
       working-directory: .github/rc
