@@ -1,23 +1,26 @@
 name: scan uat branch 
 on: 
   pull_request:
-    types: [review_requested]
+    types: [edited,opened,reopened,review_requested]
 
 jobs:
   analyzer:
-    name: branch scanner 
+    name: branch scanner
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
 
     - name: Scan repo
-      run: ls -l
-
-    - name: Setup building context
-      working-directory: .github/rc
-      shell: bash
+      if: $${{github.repository_owner == 'photon-g' && github.event.pull_request.opened == true }}
       run: |
-        ls -l 
-        echo "testing action ..."
-        ./context.sh
+        echo "scanning the repo" 
+        ls -l
+
+    - name: Scan resubmitted
+      if: $${{github.event.pull_request.edited == true }}
+      run: echo "scanning if it has been resubmitted"
+
+    - name: Scan status
+      if: $${{github.event.pull_request.review_requested == true }}
+      run: echo "detected the right status"
