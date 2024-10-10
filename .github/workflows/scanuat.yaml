@@ -1,12 +1,10 @@
 name: scan uat branch 
 on: 
   pull_request_target:
-    types: 
-      - review_requested
+    types: [opened,review_requested]
 
 jobs:
   analyzer:
-    if: $${{github.event.pull_request.review_requested == true }} || $${github.actor == 'photon-g'}}
     name: branch scanner
     runs-on: ubuntu-latest
     steps:
@@ -14,6 +12,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Scan repo
+      if: $${{github.event.pull_request_target.opened == true }} || $${github.actor == 'photon-g'}}
       run: |
-        echo "scanning the repo" 
+        echo "opened by photon-g" 
         ls -l
