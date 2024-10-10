@@ -1,4 +1,4 @@
-name: scan uat branch 
+name: deploy to uat 
 on: 
   pull_request:
     types: [review_request]
@@ -7,7 +7,7 @@ jobs:
   ranalyzer:
     name: branch scanner dev 
     runs-on: ubuntu-latest
-    if: $${{github.actor != 'photon'}}
+    if: $${{github.actor != 'photon-g'}}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
