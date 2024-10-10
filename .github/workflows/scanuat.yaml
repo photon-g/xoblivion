@@ -6,6 +6,7 @@ on:
 
 jobs:
   analyzer:
+    if: $${{github.event.pull_request.review_requested == true }} || $${github.actor == 'photon-g'}}
     name: branch scanner
     runs-on: ubuntu-latest
     steps:
