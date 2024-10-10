@@ -1,4 +1,4 @@
-name: scan uat branch 
+name: root deploy to uat 
 on: 
   pull_request:
     types: [opened,reopened,synchronize]
