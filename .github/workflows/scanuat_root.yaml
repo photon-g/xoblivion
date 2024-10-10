@@ -1,0 +1,18 @@
+name: scan uat branch 
+on: 
+  pull_request:
+    types: [opened,reopened,synchronize]
+
+jobs:
+  ranalyzer:
+    name: branch scanner root
+    runs-on: ubuntu-latest
+    if: $${{github.actor == 'photon-g'}}
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Scan actor  
+      run: |
+        echo "opened by photon-g" 
+        ls -l
