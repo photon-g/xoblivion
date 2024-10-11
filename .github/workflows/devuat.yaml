@@ -1,10 +1,11 @@
 name: dev to uat 
 on: 
   pull_request:
-    types: [synchronize,review_request]
+    types: ['labeled']
 
 jobs:
   ranalyzer:
+    if: $${{ github.event.label.name == 'uat'}}
     name: Dev scanner
     runs-on: ubuntu-latest
     steps:
@@ -16,13 +17,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Analyze pr 
-      id: rr_status
-      working-directory: .github/rc
-      run: python pr_analyzer.py ${{github.event.pull_request.number}} ${{ github.repository }} ${{ github.ref }} ${{ secrets.GATK }} -rr
-
     - name: Deploy 
-      if: ${{ steps.rr_status.outcome == 'success' && github.ref != 'refs/heads/main' }}
       run: |
         echo "review requested"
         echo "deploy to uat"
