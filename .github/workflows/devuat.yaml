@@ -1,7 +1,7 @@
 name: dev to uat 
 on: 
   pull_request:
-    types: [review_request]
+    types: [synchronize,review_request]
 
 jobs:
   ranalyzer:
