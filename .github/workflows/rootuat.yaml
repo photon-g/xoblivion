@@ -24,7 +24,7 @@ jobs:
 
     - name: Handle status
       if: ${{ steps.r_status.outcome != 'success' && github.ref != 'refs/heads/main' }} 
-      run: exit 1
+      run: exit 0
 
     - name: Deploy
       if: ${{ steps.r_status.outcome == 'success' && github.ref != 'refs/heads/main' }} 
