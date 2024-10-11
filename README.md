@@ -11,3 +11,5 @@
 ### working on the pipeline
 
 ## seeking information
+
+## finalizing the artifact
