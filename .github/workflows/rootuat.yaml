@@ -1,18 +1,26 @@
-name: root deploy to uat 
+name: root to uat 
 on: 
   pull_request:
     types: [opened,reopened,synchronize]
 
 jobs:
   ranalyzer:
-    name: branch scanner root
+    name: Root scanner
     runs-on: ubuntu-latest
-    if: $${{github.actor == 'photon-g'}}
     steps:
+    - name: Setup python env
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' # install the python version needed
+
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Scan actor  
-      run: |
-        echo "opened by photon-g" 
-        ls -l
+    - name: Analyze pr 
+      id: r_status
+      working-directory: .github/rc
+      run: python pr_analyzer.py ${{github.event.pull_request.number}} ${{ github.repository }} ${{ github.ref }} ${{ secrets.GATK }} -r
+
+    - name: Deploy
+      if: ${{ steps.r_status.outcome == 'success' && github.ref != 'refs/heads/main' }} 
+      run: echo "root deploys to uat"
