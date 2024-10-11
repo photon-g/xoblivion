@@ -1,11 +1,11 @@
-name: root deploy to uat 
+name: root to uat 
 on: 
   pull_request:
     types: [opened,reopened,synchronize]
 
 jobs:
   ranalyzer:
-    name: Dev scanner
+    name: Root scanner
     runs-on: ubuntu-latest
     steps:
     - name: Setup python env
@@ -16,7 +16,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Analyze root pr 
+    - name: Analyze pr 
       id: r_status
       working-directory: .github/rc
       run: python pr_analyzer.py ${{github.event.pull_request.number}} ${{ github.repository }} ${{ github.ref }} ${{ secrets.GATK }} -r
